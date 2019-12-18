@@ -7,6 +7,7 @@
 <%@page import="java.sql.*"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.*"%>
+<%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.io.*"%>
 <!DOCTYPE html>
@@ -34,6 +35,12 @@
     
     <% 
         int id=0;
+        int hours1=0;
+        int minutes1=0;
+        int seconds1=0;
+        String workinghour="";
+        String punch_in="";
+        String punch_out="";
         String email1=(String)session.getAttribute("user");  
 
         if(email1==null)
@@ -61,6 +68,16 @@
                     {
                          id=rs.getInt("idmanage");
                          session.setAttribute("id",id);
+                         workinghour=rs.getString("workinghour");
+                         punch_in=rs.getString("punch_in");
+                         punch_out=rs.getString("punch_out");
+                         
+                         session.setAttribute("workinghour",workinghour);
+                         String[] firstTimeParts = workinghour.split(":");
+				// Converting String to Integer
+				hours1 = Integer.parseInt(firstTimeParts[0]);
+				minutes1 = Integer.parseInt(firstTimeParts[1]);
+				seconds1 = Integer.parseInt(firstTimeParts[2]);
                     }
                     else
                     {
@@ -177,11 +194,42 @@
 
         </nav>
         <!-- /. NAV SIDE  -->
+        
+        <% 
+             	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+             
+                Date d1 = null;
+		Date d2 = null;
+                String diffSeconds1="";
+                String diffMinutes1="";
+                String diffHours1="";
+                long diffSeconds=0;
+                long diffMinutes=0;
+                long diff=0;
+		try {
+			d1 = format.parse(punch_in);
+			d2 = format.parse(punch_out);
+
+			//in milliseconds
+			diff = d2.getTime() - d1.getTime();
+
+			diffSeconds = diff / 1000 % 60;
+                        diffSeconds1 =Long.toString(diffSeconds);
+			diffMinutes = diff / (60 * 1000) % 60;
+                        diffMinutes1 =Long.toString(diffMinutes);
+			long diffHours = diff / (60 * 60 * 1000) % 24;
+			diffHours1 =Long.toString(diffHours);
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+                %>
       
 		<div id="page-wrapper">
 		  <div class="header"> 
                         <h1 class="page-header">
-                            Dashboard <small>Welcome Rumit Shah </small>
+                            Dashboard <small>Welcome Rumit Shah</small>
                         </h1>
 						<ol class="breadcrumb">
 					  <li><a href="#">Home</a></li>
@@ -195,10 +243,42 @@
                 <!-- /. ROW  -->
 	
                
-					
-				<center>
-				 <input name="button" class="btn btn-primary" onclick="change(); database()" type="button" value="Punch In" id="start1"></input>
+                
+                <%
+//                   
+                   if( diffSeconds1.startsWith("-") || diffMinutes1.startsWith("-") || diffHours1.startsWith("-"))
+                   {
+                       %>
+                        <center>
+				 <input name="button" class="btn btn-primary" onclick="change1()" type="button" value="Punch Out" id="start1"></input>
 				</center>
+                        
+                      <%   
+                   }
+                    else if(punch_out==null)
+                    {
+                         %>
+                        <center>
+				 <input name="button" class="btn btn-primary" onclick="change()" type="button" value="Punch Out" id="start1"></input>
+				</center>
+                        
+                      <%  
+                    }
+                    else
+                    {
+                        %>
+                        
+                        <center>
+				 <input name="button" class="btn btn-primary" onclick="change()" type="button" value="Punch In" id="start1"></input>
+				</center>
+                        
+                      <%   
+
+                    }
+//                               
+               %>
+					
+				
 				
 	
 			
@@ -374,7 +454,7 @@
      
     var h3 = document.getElementsByTagName ('h3')[0],
     startstop = document.getElementById ('start1'),
-    seconds = 0, minutes = 0, hours = 0, t;
+    seconds = <%=seconds1 %>, minutes = <%=minutes1 %>, hours = <%=hours1 %>, t;
 
 function
 timer ()
@@ -425,9 +505,9 @@ add ()
     }
 
   h3.textContent =
-    (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" +
+          (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" +
     (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" +
-    (seconds > 9 ? seconds : "0" + seconds);
+    (seconds > 9 ? seconds : "0" + seconds) ;
 
   timer ();
 }

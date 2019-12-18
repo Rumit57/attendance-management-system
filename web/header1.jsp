@@ -11,7 +11,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
+            <%
+            String workinghour1=(String)session.getAttribute("workinghour");
+            %>
     <body>
+        
+        
         <nav class="navbar navbar-default top-navbar" role="navigation">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
@@ -30,7 +35,7 @@
             <ul class="nav navbar-top-links navbar-right">
             
             <li >
-                    <h3><time>00:00:00</time></h3> 
+                <h3><time><%= workinghour1 %></time></h3> 
                     
                     
                     <!-- /.dropdown-messages -->
