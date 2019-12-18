@@ -25,7 +25,9 @@
           //  System.out.println(formatter.format(calendar.getTime()));
           String punch_in="";
           String punch_out="";
-          String q1="SELECT * FROM AMS.manage WHERE idmanage='16'";
+           String q3="UPDATE AMS.manage SET punch_out='"+formatter.format(calendar.getTime())+"' where idmanage='"+session.getAttribute("id")+"'";
+            int i =st.executeUpdate(q3);
+          String q1="SELECT * FROM AMS.manage WHERE idmanage='"+session.getAttribute("id")+"'";
           ResultSet rs = st.executeQuery(q1);
           while(rs.next())
             {
@@ -45,9 +47,9 @@
             }
           
           
-        String q3="UPDATE AMS.manage SET punch_out='"+formatter.format(calendar.getTime())+"' where idmanage='16'";
-        String q4="UPDATE AMS.manage SET workinghour='"+wh1+"' where idmanage='16'";
-            int i =st.executeUpdate(q3);
+       
+        String q4="UPDATE AMS.manage SET workinghour='"+wh1+"' where idmanage='"+session.getAttribute("id")+"'";
+           
             int i1 =st.executeUpdate(q4);
         }catch (ClassNotFoundException ex) {
             System.out.println(ex);

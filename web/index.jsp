@@ -33,7 +33,7 @@
 </head>
     
     <% 
-        
+        int id=0;
         String email1=(String)session.getAttribute("user");  
 
         if(email1==null)
@@ -52,17 +52,26 @@
             String q1="SELECT * FROM AMS.manage";
             ResultSet rs = st.executeQuery(q1);
             
+             
+              
             
             if(rs.next())
                 {
                     if(rs.getString("date").equalsIgnoreCase(formatter.format(calendar.getTime())) && rs.getString("email").equalsIgnoreCase(email1))
                     {
-                         
+                         id=rs.getInt("idmanage");
+                         session.setAttribute("id",id);
                     }
                     else
                     {
                         String q="insert into AMS.manage(email,date) values('"+email1+"','"+formatter.format(calendar.getTime())+"')";
                         int i =st.executeUpdate(q);
+                        String q2="SELECT LAST_INSERT_ID()";
+                        ResultSet rs1 = st.executeQuery(q2);
+                        if(rs.next())
+                        {
+                            session.setAttribute("id",rs.getInt("idmanage"));
+                        }
 
                     }
                }
@@ -70,6 +79,12 @@
             {
                 String q="insert into AMS.manage(email,date) values('"+email1+"','"+formatter.format(calendar.getTime())+"')";
                         int i =st.executeUpdate(q);
+                        String q2="SELECT LAST_INSERT_ID()";
+                        ResultSet rs1 = st.executeQuery(q2);
+                        if(rs.next())
+                        {
+                            session.setAttribute("id",rs.getInt("idmanage"));
+                        }
             }
            
          
@@ -166,7 +181,7 @@
 		<div id="page-wrapper">
 		  <div class="header"> 
                         <h1 class="page-header">
-                            Dashboard <small>Welcome Rumit Shah</small>
+                            Dashboard <small>Welcome Rumit Shah </small>
                         </h1>
 						<ol class="breadcrumb">
 					  <li><a href="#">Home</a></li>

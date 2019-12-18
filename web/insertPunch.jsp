@@ -23,11 +23,20 @@
         Class.forName("com.mysql.jdbc.Driver"); 
             Connection cn=DriverManager.getConnection("jdbc:mysql://localhost:3306/AMS","root","mysql");
             Statement st=cn.createStatement(); 
-          //  System.out.println(formatter.format(calendar.getTime()));
+            
+            String q1="SELECT * FROM AMS.manage where idmanage='"+session.getAttribute("id")+"' and punch_in is null";
+            ResultSet rs = st.executeQuery(q1);
+            
+            if(rs.next())
+            {
+                String q="UPDATE AMS.manage SET punch_in='"+formatter.format(calendar.getTime())+"' where idmanage='"+session.getAttribute("id")+"'";
+                int i =st.executeUpdate(q);
+            }
           
-          String q="UPDATE AMS.manage SET punch_in='"+formatter.format(calendar.getTime())+"' where idmanage='1'";
+          
+          
      
-            int i =st.executeUpdate(q);
+            
         }catch (ClassNotFoundException ex) {
             System.out.println(ex);
         } catch (SQLException ex) {
