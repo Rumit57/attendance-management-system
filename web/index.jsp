@@ -42,6 +42,48 @@
         }
         else
         {
+            try{
+                Class.forName("com.mysql.jdbc.Driver"); 
+            Connection cn=DriverManager.getConnection("jdbc:mysql://localhost:3306/AMS","root","mysql");
+            Statement st=cn.createStatement(); 
+             Calendar calendar = Calendar.getInstance();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            
+            String q1="SELECT * FROM AMS.manage";
+            ResultSet rs = st.executeQuery(q1);
+            
+            
+            if(rs.next())
+                {
+                    if(rs.getString("date").equalsIgnoreCase(formatter.format(calendar.getTime())) && rs.getString("email").equalsIgnoreCase(email1))
+                    {
+                         
+                    }
+                    else
+                    {
+                        String q="insert into AMS.manage(email,date) values('"+email1+"','"+formatter.format(calendar.getTime())+"')";
+                        int i =st.executeUpdate(q);
+
+                    }
+               }
+            else
+            {
+                String q="insert into AMS.manage(email,date) values('"+email1+"','"+formatter.format(calendar.getTime())+"')";
+                        int i =st.executeUpdate(q);
+            }
+           
+         
+           
+        //System.out.println(formatter.format(calendar.getTime()));
+       
+          //  System.out.println(formatter.format(calendar.getTime()));
+       
+        }catch (ClassNotFoundException ex) {
+            System.out.println(ex);
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+ 
 
         %>
 
@@ -140,7 +182,7 @@
                
 					
 				<center>
-				 <input class="btn btn-primary" onclick="return change()" type="button" value="Punch In" id="start1"></input>
+				 <input name="button" class="btn btn-primary" onclick="change(); database()" type="button" value="Punch In" id="start1"></input>
 				</center>
 				
 	
@@ -333,18 +375,24 @@ var elem = document.getElementById("start1");
         
     clearTimeout (t);
      elem.value = "Punch In";
+     $.post( "updatePunch.jsp" );
      
     }
     
     else {
         
     timer();
-     elem.value = "Punch Out"; 
-    
-        
+     elem.value = "Punch Out";   
+     $.post( "insertPunch.jsp" );
     }
 
   }
+  
+  
+  
+       
+  
+  
 
 function
 add ()
