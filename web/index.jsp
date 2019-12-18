@@ -64,7 +64,7 @@
                     }
                     else
                     {
-                        String q="insert into AMS.manage(email,date) values('"+email1+"','"+formatter.format(calendar.getTime())+"')";
+                        String q="insert into AMS.manage(email,date) values('"+email1+"','"+formatter.format(calendar.getTime())+"','00:00:00')";
                         int i =st.executeUpdate(q);
                         String q2="SELECT LAST_INSERT_ID()";
                         ResultSet rs1 = st.executeQuery(q2);
@@ -77,7 +77,7 @@
                }
             else
             {
-                String q="insert into AMS.manage(email,date) values('"+email1+"','"+formatter.format(calendar.getTime())+"')";
+                String q="insert into AMS.manage(email,date,workinghour) values('"+email1+"','"+formatter.format(calendar.getTime())+"','00:00:00')";
                         int i =st.executeUpdate(q);
                         String q2="SELECT LAST_INSERT_ID()";
                         ResultSet rs1 = st.executeQuery(q2);

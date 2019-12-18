@@ -24,7 +24,7 @@
             Connection cn=DriverManager.getConnection("jdbc:mysql://localhost:3306/AMS","root","mysql");
             Statement st=cn.createStatement(); 
             
-            String q1="SELECT * FROM AMS.manage where idmanage='"+session.getAttribute("id")+"' and punch_in is null";
+            String q1="SELECT * FROM AMS.manage where idmanage='"+session.getAttribute("id")+"'";
             ResultSet rs = st.executeQuery(q1);
             
             if(rs.next())
