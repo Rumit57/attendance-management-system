@@ -4,6 +4,9 @@
     Author     : rumit
 --%>
 
+<%@page import="java.sql.*"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.io.*"%>
 <!DOCTYPE html>
@@ -137,7 +140,7 @@
                
 					
 				<center>
-				 <input class="btn btn-primary" onclick="change()" type="button" value="Punch In" id="start1"></input>
+				 <input class="btn btn-primary" onclick="return change()" type="button" value="Punch In" id="start1"></input>
 				</center>
 				
 	
@@ -310,11 +313,8 @@
     <!-- Chart Js -->
     <script type="text/javascript" src="assets/js/Chart.min.js"></script>  
     <script type="text/javascript" src="assets/js/chartjs.js"></script> 
-
-</body>
-
-<script>
-  
+    <script language="javascript" type="text/javascript">
+     
     var h3 = document.getElementsByTagName ('h3')[0],
     startstop = document.getElementById ('start1'),
     seconds = 0, minutes = 0, hours = 0, t;
@@ -325,27 +325,26 @@ timer ()
   t = setTimeout (add, 1000);
 }
 
-function change() 
-{
-    
-   
-    
+
+  function change()
+  {
 var elem = document.getElementById("start1");
     if (elem.value=="Punch Out"){ 
         
     clearTimeout (t);
-     elem.value = "Punch In"
+     elem.value = "Punch In";
+     
     }
     
     else {
         
     timer();
-     elem.value = "Punch Out"    
+     elem.value = "Punch Out"; 
     
+        
     }
-}
 
-
+  }
 
 function
 add ()
@@ -369,10 +368,8 @@ add ()
 
   timer ();
 }
-
-
-</script>
-
+    </script>
+</body>
 </html>
 <%
         }
