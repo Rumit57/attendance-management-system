@@ -42,7 +42,8 @@
         String punch_in="";
         String punch_out="";
         String email1=(String)session.getAttribute("user");  
-
+             Calendar calendar = Calendar.getInstance();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         if(email1==null)
         {
             response.sendRedirect("login.jsp");
@@ -53,68 +54,66 @@
                 Class.forName("com.mysql.jdbc.Driver"); 
             Connection cn=DriverManager.getConnection("jdbc:mysql://localhost:3306/AMS","root","mysql");
             Statement st=cn.createStatement(); 
-             Calendar calendar = Calendar.getInstance();
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             
-            String q1="SELECT * FROM AMS.manage";
+            
+            String q1="SELECT * FROM AMS.manage where date='"+formatter.format(calendar.getTime())+"'";
             ResultSet rs = st.executeQuery(q1);
-            
-             
-              
-            
-            if(rs.next())
-                {
-                    if(rs.getString("date").equalsIgnoreCase(formatter.format(calendar.getTime())) && rs.getString("email").equalsIgnoreCase(email1))
-                    {
-                         id=rs.getInt("idmanage");
-                         session.setAttribute("id",id);
-                         workinghour=rs.getString("workinghour");
-                         punch_in=rs.getString("punch_in");
-                         punch_out=rs.getString("punch_out");
-                         
-                         session.setAttribute("workinghour",workinghour);
-                         String[] firstTimeParts = workinghour.split(":");
-				// Converting String to Integer
-				hours1 = Integer.parseInt(firstTimeParts[0]);
-				minutes1 = Integer.parseInt(firstTimeParts[1]);
-				seconds1 = Integer.parseInt(firstTimeParts[2]);
-                    }
-                    else
-                    {
-                        String q="insert into AMS.manage(email,date) values('"+email1+"','"+formatter.format(calendar.getTime())+"','00:00:00')";
-                        int i =st.executeUpdate(q);
-                        String q2="SELECT LAST_INSERT_ID()";
-                        ResultSet rs1 = st.executeQuery(q2);
-                        if(rs.next())
-                        {
-                            session.setAttribute("id",rs.getInt("idmanage"));
-                        }
 
-                    }
-               }
-            else
-            {
-                String q="insert into AMS.manage(email,date,workinghour) values('"+email1+"','"+formatter.format(calendar.getTime())+"','00:00:00')";
-                        int i =st.executeUpdate(q);
-                        String q2="SELECT LAST_INSERT_ID()";
-                        ResultSet rs1 = st.executeQuery(q2);
-                        if(rs.next())
+            while(rs.next())
+                {
+                    
+                        if(rs.getString("date").equals(formatter.format(calendar.getTime())))
                         {
-                            session.setAttribute("id",rs.getInt("idmanage"));
+                            
+                            String qSelect="select * from AMS.manage where date='"+rs.getString("date")+"' and email='"+email1+"'";
+                            ResultSet rsSelect = st.executeQuery(qSelect);
+                            
+                            while(rsSelect.next())
+                            {
+                               
+                                if(rsSelect.getString("email").equalsIgnoreCase(email1))
+                                {
+                                    id=rsSelect.getInt("idmanage");
+                                    session.setAttribute("id",id);
+                                    workinghour=rsSelect.getString("workinghour");
+                                    punch_in=rsSelect.getString("punch_in");
+                                    punch_out=rsSelect.getString("punch_out");
+                                    session.setAttribute("workinghour",workinghour);
+
+                                    String[] firstTimeParts = workinghour.split(":");
+                                   // Converting String to Integer
+                                   hours1 = Integer.parseInt(firstTimeParts[0]);
+                                   minutes1 = Integer.parseInt(firstTimeParts[1]);
+                                   seconds1 = Integer.parseInt(firstTimeParts[2]);
+                                   
+
+                                }
+                            } 
                         }
-            }
-           
-         
-           
-        //System.out.println(formatter.format(calendar.getTime()));
-       
-          //  System.out.println(formatter.format(calendar.getTime()));
-       
-        }catch (ClassNotFoundException ex) {
+                        else
+                        {
+                            String qinsert="insert into AMS.manage(email,date,workinghour) select '"+email1+"','"+formatter.format(calendar.getTime())+"','00:00:00' where not exists (Select date From AMS.manage where date='"+formatter.format(calendar.getTime())+"') LIMIT 1";
+                            int i =st.executeUpdate(qinsert);
+                            if(i>0)
+                            {
+                                String q2="SELECT idmanage,workinghour FROM AMS.manage ORDER BY idmanage DESC LIMIT 1";
+                                ResultSet rs1 = st.executeQuery(q2);
+                                if(rs1.next())
+                                {
+                                   session.setAttribute("id",rs1.getInt("idmanage"));
+                                   session.setAttribute("workinghour",rs1.getString("workinghour"));
+                                }
+                            }
+  
+                        } 
+               }
+            
+ }catch (ClassNotFoundException ex) {
             System.out.println(ex);
         } catch (SQLException ex) {
             System.out.println(ex);
         }
+       
  
 
         %>
@@ -193,22 +192,34 @@
             </div>
 
         </nav>
-        <!-- /. NAV SIDE  -->
+       
         
         <% 
-             	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            
+             	SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
              
                 Date d1 = null;
 		Date d2 = null;
+		//Date d3 = null;
+                String wh1="";
                 String diffSeconds1="";
                 String diffMinutes1="";
                 String diffHours1="";
                 long diffSeconds=0;
                 long diffMinutes=0;
                 long diff=0;
+                int hours3=0;
+                int minutes3=0;
+                int seconds3=0;
+                String finalTime="";
 		try {
-			d1 = format.parse(punch_in);
-			d2 = format.parse(punch_out);
+                        Class.forName("com.mysql.jdbc.Driver"); 
+                           Connection cn=DriverManager.getConnection("jdbc:mysql://localhost:3306/AMS","root","mysql");
+                           Statement st=cn.createStatement(); 
+                        
+			d1 = format2.parse(punch_in);
+			d2 = format2.parse(punch_out);
+			//d3 = format2.format(calendar.getTime());
 
 			//in milliseconds
 			diff = d2.getTime() - d1.getTime();
@@ -220,6 +231,86 @@
 			long diffHours = diff / (60 * 60 * 1000) % 24;
 			diffHours1 =Long.toString(diffHours);
 
+               String q2=" SELECT TIMEDIFF('"+format2.format(calendar.getTime())+"','"+punch_in+"')";
+               ResultSet rstimepunch = st.executeQuery(q2);
+
+                
+                while(rstimepunch.next())
+                {
+                    wh1=rstimepunch.getString("TIMEDIFF('"+format2.format(calendar.getTime())+"','"+punch_in+"')");
+
+                }
+                
+                
+            
+            String[] firstTimeParts = workinghour.split(":");
+				// Converting String to Integer
+				hours3 = Integer.parseInt(firstTimeParts[0]);
+				minutes3 = Integer.parseInt(firstTimeParts[1]);
+				seconds3 = Integer.parseInt(firstTimeParts[2]);
+
+				// Separating second String using delimiter ":"
+				String[] secondTimeParts = wh1.split(":");
+				// Converting String to Integer
+				int hours2 = Integer.parseInt(secondTimeParts[0]);
+				int minutes2 = Integer.parseInt(secondTimeParts[1]);
+				int seconds2 = Integer.parseInt(secondTimeParts[2]);
+
+				int hours = hours3 + hours2;
+				int minutes = minutes3 + minutes2;
+				int seconds = seconds3 + seconds2;
+				int days = 0;
+
+				/*
+				 * 
+				 * 60 seconds=1 minute. So if value of seconds>59 adding 1
+				 * minute to minutes. 60 minutes=1 hour So if value of
+				 * minutes>59 adding 1 hour to hours. 24 hours=1 day So if value
+				 * of hours>23 adding 1 day to days.
+				 * 
+				 */
+				if (seconds > 59) {
+					seconds = seconds - 60;
+					minutes = minutes + 1;
+					if (minutes > 59) {
+						minutes = minutes - 60;
+						hours = hours + 1;
+						if (hours > 23) {
+							hours = hours - 24;
+							days = days + 1;
+						}
+					} else {
+
+						if (hours > 23) {
+							hours = hours - 24;
+							days = days + 1;
+						}
+
+					}
+				} else {
+					if (minutes > 59) {
+						minutes = minutes - 60;
+						hours = hours + 1;
+						if (hours > 23) {
+							hours = hours - 24;
+							days = days + 1;
+						}
+					} else {
+
+						if (hours > 23) {
+							hours = hours - 24;
+							days = days + 1;
+						}
+
+					}
+				}
+
+				// Converting each integer value of String and combining all Strings.
+				finalTime = String.valueOf(hours) + ":" + String.valueOf(minutes) + ":" + String.valueOf(seconds);
+				
+				
+                
+               
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -229,7 +320,7 @@
 		<div id="page-wrapper">
 		  <div class="header"> 
                         <h1 class="page-header">
-                            Dashboard <small>Welcome Rumit Shah</small>
+                            Dashboard <small>Welcome Rumit Shah  <%=wh1 %> <%=finalTime%> </small>
                         </h1>
 						<ol class="breadcrumb">
 					  <li><a href="#">Home</a></li>
@@ -248,9 +339,22 @@
 //                   
                    if( diffSeconds1.startsWith("-") || diffMinutes1.startsWith("-") || diffHours1.startsWith("-"))
                    {
+                        try {
+                         Class.forName("com.mysql.jdbc.Driver"); 
+                            Connection cn=DriverManager.getConnection("jdbc:mysql://localhost:3306/AMS","root","mysql");
+                            Statement st=cn.createStatement(); 
+                        String addworking="update AMS.manage SET workinghour='"+finalTime+"' where idmanage='"+session.getAttribute("id")+"'";
+                                 int i1 =st.executeUpdate(addworking);
+                         session.setAttribute("workinghour",finalTime);
+                        } catch (Exception e) {
+                         e.printStackTrace();
+                         }   
                        %>
+                      
+                       
                         <center>
-				 <input name="button" class="btn btn-primary" onclick="change1()" type="button" value="Punch Out" id="start1"></input>
+                            
+				 <input name="button" class="btn btn-primary" onclick="change()" type="button" value="Punch Out" id="start1"></input>
 				</center>
                         
                       <%   
@@ -450,11 +554,10 @@
     <!-- Chart Js -->
     <script type="text/javascript" src="assets/js/Chart.min.js"></script>  
     <script type="text/javascript" src="assets/js/chartjs.js"></script> 
-    <script language="javascript" type="text/javascript">
+    <script type="text/javascript" >
      
     var h3 = document.getElementsByTagName ('h3')[0],
-    startstop = document.getElementById ('start1'),
-    seconds = <%=seconds1 %>, minutes = <%=minutes1 %>, hours = <%=hours1 %>, t;
+    seconds = <%=seconds3 %>, minutes = <%=minutes3 %>, hours = <%=hours3 %>, t;
 
 function
 timer ()
@@ -515,6 +618,7 @@ add ()
 </body>
 </html>
 <%
+    
         }
 
 %>
