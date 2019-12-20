@@ -41,6 +41,8 @@
         String workinghour="";
         String punch_in="";
         String punch_out="";
+        int count1=0;
+        int count2=0;
         String email1=(String)session.getAttribute("user");  
              Calendar calendar = Calendar.getInstance();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -56,21 +58,22 @@
             Statement st=cn.createStatement(); 
             
             
-            String q1="SELECT * FROM AMS.manage where date='"+formatter.format(calendar.getTime())+"'";
+            String q1="SELECT * FROM AMS.manage ";
             ResultSet rs = st.executeQuery(q1);
-
+            
             while(rs.next())
                 {
                     
                         if(rs.getString("date").equals(formatter.format(calendar.getTime())))
                         {
-                            
+                            count1=count1+1;
                             String qSelect="select * from AMS.manage where date='"+rs.getString("date")+"' and email='"+email1+"'";
                             ResultSet rsSelect = st.executeQuery(qSelect);
                             
                             while(rsSelect.next())
                             {
-                               
+//                                session.setAttribute("id","35");
+//                                session.setAttribute("workinghour","00:00:01");
                                 if(rsSelect.getString("email").equalsIgnoreCase(email1))
                                 {
                                     id=rsSelect.getInt("idmanage");
@@ -90,23 +93,31 @@
                                 }
                             } 
                         }
-                        else
-                        {
+                }
+            
+            String q2="SELECT * FROM AMS.manage where not exists (Select date From AMS.manage where date='"+formatter.format(calendar.getTime())+"')";
+            ResultSet r2 = st.executeQuery(q2);
+            while(r2.next())
+            {
+                
+                            count2=count2+1;
                             String qinsert="insert into AMS.manage(email,date,workinghour) select '"+email1+"','"+formatter.format(calendar.getTime())+"','00:00:00' where not exists (Select date From AMS.manage where date='"+formatter.format(calendar.getTime())+"') LIMIT 1";
+//                            String qinsert="insert into AMS.manage(email,date,workinghour) values('"+email1+"','"+formatter.format(calendar.getTime())+"','00:00:00') ";
                             int i =st.executeUpdate(qinsert);
                             if(i>0)
                             {
-                                String q2="SELECT idmanage,workinghour FROM AMS.manage ORDER BY idmanage DESC LIMIT 1";
-                                ResultSet rs1 = st.executeQuery(q2);
+                                String q3="SELECT * FROM AMS.manage ORDER BY idmanage DESC LIMIT 1";
+                                ResultSet rs1 = st.executeQuery(q3);
                                 if(rs1.next())
                                 {
                                    session.setAttribute("id",rs1.getInt("idmanage"));
                                    session.setAttribute("workinghour",rs1.getString("workinghour"));
                                 }
                             }
-  
-                        } 
-               }
+                       
+                 }
+                        
+              
             
  }catch (ClassNotFoundException ex) {
             System.out.println(ex);
@@ -320,7 +331,7 @@
 		<div id="page-wrapper">
 		  <div class="header"> 
                         <h1 class="page-header">
-                            Dashboard <small>Welcome Rumit Shah  <%=wh1 %> <%=finalTime%> </small>
+                            Dashboard <small>Welcome Rumit Shah <%=session.getAttribute("id") %> <%=count1 %> <%=count2%> </small>
                         </h1>
 						<ol class="breadcrumb">
 					  <li><a href="#">Home</a></li>
@@ -352,10 +363,10 @@
                        %>
                       
                        
+                       
                         <center>
-                            
 				 <input name="button" class="btn btn-primary" onclick="change()" type="button" value="Punch Out" id="start1"></input>
-				</center>
+			</center>
                         
                       <%   
                    }

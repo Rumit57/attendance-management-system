@@ -4,6 +4,7 @@
     Author     : rumit
 --%>
 
+<%@page import="java.sql.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,6 +13,24 @@
         <title>JSP Page</title>
     </head>
             <%
+                
+                
+//                String workinghour1="";
+//                try {
+//                         Class.forName("com.mysql.jdbc.Driver"); 
+//                            Connection cn=DriverManager.getConnection("jdbc:mysql://localhost:3306/AMS","root","mysql");
+//                            Statement st=cn.createStatement(); 
+//                        String addworkinghour="select * from AMS.manage where idmanage='"+session.getAttribute("id")+"'";
+//                                 ResultSet rs1 = st.executeQuery(addworkinghour);
+//                                if(rs1.next())
+//                                {
+//                                  
+//                                   workinghour1=rs1.getString("workinghour");
+//                                }
+//                         
+//                        } catch (Exception e) {
+//                         e.printStackTrace();
+//                         }   
             String workinghour1=(String)session.getAttribute("workinghour");
             %>
     <body>

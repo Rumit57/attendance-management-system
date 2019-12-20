@@ -7,6 +7,7 @@ package com;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.*;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -35,7 +36,8 @@ public class Logout extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session=request.getSession();  
-            
+            String workinghour=(String)session.getAttribute("workinghour");
+              
             if (session.getAttribute("user") != null) {  
             session.invalidate();
             response.sendRedirect("login.jsp");
