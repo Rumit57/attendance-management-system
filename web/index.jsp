@@ -169,9 +169,7 @@
                     <li>
                         <a href="#"><i class="fa fa-table"></i>Live Activity Tables</a>
                     </li>
-                    <li>
-                        <a href="leave.jsp"><i class="fa fa-edit"></i> Leave </a>
-                    </li>
+                  
                        
 
                     <li>
@@ -347,7 +345,7 @@
                
                 
                 <%
-//                   
+                   
                    if( diffSeconds1.startsWith("-") || diffMinutes1.startsWith("-") || diffHours1.startsWith("-"))
                    {
                         try {
@@ -366,11 +364,22 @@
                         <center>
 				 <input name="button" class="btn btn-primary" onclick="change()" type="button" value="Punch Out" id="start1"></input>
 			</center>
-                         <script type="text/javascript" src="punchJS.js"></script>
+                       
                       <%   
                    }
                     else if(punch_out==null)
                     {
+
+                        try {
+                         Class.forName("com.mysql.jdbc.Driver"); 
+                            Connection cn=DriverManager.getConnection("jdbc:mysql://localhost:3306/AMS","root","mysql");
+                            Statement st=cn.createStatement(); 
+                        String addworking="update AMS.manage SET workinghour='"+finalTime+"' where idmanage='"+session.getAttribute("id")+"'";
+                                 int i1 =st.executeUpdate(addworking);
+                         session.setAttribute("workinghour",finalTime);
+                        } catch (Exception e) {
+                         e.printStackTrace();
+                         }   
                          %>
                          
                         <center>
