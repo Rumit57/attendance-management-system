@@ -44,7 +44,7 @@ public class change_password extends HttpServlet {
            String c_password = request.getParameter("confirm_password");
            String code = request.getParameter("code");
            int count1=0;
-          
+         
            
            String q1="SELECT * FROM AMS.forgot_password ";
             ResultSet rs = st.executeQuery(q1);
@@ -69,15 +69,23 @@ public class change_password extends HttpServlet {
                         RequestDispatcher dis=request.getRequestDispatcher("index.jsp");
                         dis.forward(request, response);
                     }
+                    
                     else
                     {
-                        out.println("invalid");
+                        out.println("<html>");
+                        out.println("<body>");
+                        out.println("<center>");
+                        out.println("<h2 style='color:red'><b>Invalid</b></h2>");
+                        out.println("</center>");   
+                        out.println("</body>");   
+                        out.println("</html>");
                         RequestDispatcher dis=request.getRequestDispatcher("changePassword.jsp");
-                        dis.forward(request, response);
+                        dis.include(request, response);
                     }
                     
                 }
-                    
+              
+          
            
         }catch(Exception ex)
         {
