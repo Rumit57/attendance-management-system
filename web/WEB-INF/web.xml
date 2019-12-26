@@ -16,6 +16,10 @@
         <servlet-name>mail</servlet-name>
         <servlet-class>com.mail</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>change_password</servlet-name>
+        <servlet-class>com.change_password</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>index</servlet-name>
         <url-pattern>/index</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>mail</servlet-name>
         <url-pattern>/mail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>change_password</servlet-name>
+        <url-pattern>/change_password</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

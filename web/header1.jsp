@@ -44,7 +44,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.jsp"><strong><i class="icon fa fa-desktop"></i> PRIMAVERA</strong></a>
+                <a class="navbar-brand" href="index.jsp"><strong><i class="icon fa fa-desktop"></i> AMS</strong></a>
 				
 		<div id="sideNav" href="">
 		<i class="fa fa-bars icon"></i> 

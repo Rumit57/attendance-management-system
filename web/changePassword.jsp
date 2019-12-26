@@ -1,6 +1,6 @@
 <%-- 
-    Document   : forgotPassword
-    Created on : 26 Dec, 2019, 12:05:28 PM
+    Document   : changePassword
+    Created on : 26 Dec, 2019, 12:49:55 PM
     Author     : rumit
 --%>
 
@@ -30,21 +30,37 @@
             <div class="panel panel-default">
               <div class="panel-body">
                 <div class="text-center">
-                  <h3><i class="fa fa-lock fa-4x"></i></h3>
-                  <h2 class="text-center">Forgot Password?</h2>
-                  <p>You can reset your password here.</p>
+                  <h3><i class="fa fa-unlock fa-4x"></i></h3>
+                  <h2 class="text-center">Change Password</h2>
+                  <p>You can Change your password here.</p>
                   <div class="panel-body">
     
-                      <form id="register-form" action="mail"  autocomplete="off" class="form" method="post">
+                      <form id="register-form" action="change_password"  autocomplete="off" class="form" method="post">
     
                       <div class="form-group">
                         <div class="input-group">
                           <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
                           <input id="email" name="to" placeholder="email address" class="form-control"  type="email" required="">
                         </div>
+                          <br>
+                          <div class="input-group">
+                          <span class="input-group-addon"><i class="fa fa-lock "></i></span>
+                          <input id="new_password" name="new_password" placeholder="New password" class="form-control"  type="password" required="">
+                        </div>
+                           <br>
+                          <div class="input-group">
+                          <span class="input-group-addon"><i class="fa fa-lock "></i></span>
+                          <input id="confirm_password" name="confirm_password" placeholder="confirm password" class="form-control"  type="password" required="">
+                        </div>
+                             <br>
+                          <div class="input-group">
+                              <span class="input-group-addon"><i class="glyphicon glyphicon-credit-card"></i></span>
+
+                              <input id="code" name="code" placeholder="code" class="form-control"  type="text" required="">
+                        </div>
                       </div>
                       <div class="form-group">
-                        <input name="recover-submit" class="btn btn-lg btn-primary btn-block" value="Forgot Password" type="submit">
+                        <input name="recover-submit" class="btn btn-lg btn-primary btn-block" value="Submit" type="submit">
                       </div>
                     </form>
     
