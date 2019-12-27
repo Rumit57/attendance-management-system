@@ -130,6 +130,17 @@
         %>
 
 <body>
+       <!--progress-->
+    <link href="css/style_1.css" rel="stylesheet">
+    <script src="js/common.min.js"></script>
+    <script src="js/custom.min.js"></script>
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
     <div id="wrapper">
         <%@include file="header1.jsp" %>
         
@@ -361,9 +372,9 @@
                 %>
                       
                       
-                        <center>
-				 <input name="button" class="btn btn-primary" onclick="change()" type="button" value="Punch Out" id="start1"></input>
-			</center>
+                    <center>
+                             <input name="button" class="btn btn-primary" onclick="change()" type="button" value="Punch Out" id="start1"></input>
+                    </center>
                        
                       <%   
                    }
@@ -381,26 +392,24 @@
                                String punch_in1=rscheck.getString("punch_in");
                                if(punch_in1==null)
                                 {
-                                     %>
+                                    %>
                          
                                     <center>
                                              <input name="button" class="btn btn-primary" onclick="change()" type="button" value="Punch In" id="start1"></input>
                                             </center>
 
-                                  <%  
+                                    <%  
                                 }
                                 else
                                 {
                                      String addworking="update AMS.manage SET workinghour='"+finalTime+"' where idmanage='"+session.getAttribute("id")+"'";
                                      int i1 =st.executeUpdate(addworking);
                                      session.setAttribute("workinghour",finalTime);
-                                  %>
-                         
+                                    %>
                                     <center>
                                              <input name="button" class="btn btn-primary" onclick="change()" type="button" value="Punch Out" id="start1"></input>
                                             </center>
-
-                                  <%  
+                                    <%  
                                 }
                             }
                        

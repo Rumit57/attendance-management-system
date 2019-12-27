@@ -15,6 +15,17 @@
         <title>JSP Page</title>
     </head>
     <body>
+           <!--progress-->
+    <link href="css/style_1.css" rel="stylesheet">
+    <script src="js/common.min.js"></script>
+    <script src="js/custom.min.js"></script>
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
          <%   
          try{
             Calendar calendar = Calendar.getInstance();
