@@ -394,7 +394,7 @@
                                      String addworking="update AMS.manage SET workinghour='"+finalTime+"' where idmanage='"+session.getAttribute("id")+"'";
                                      int i1 =st.executeUpdate(addworking);
                                      session.setAttribute("workinghour",finalTime);
-                                      %>
+                                  %>
                          
                                     <center>
                                              <input name="button" class="btn btn-primary" onclick="change()" type="button" value="Punch Out" id="start1"></input>
@@ -417,15 +417,13 @@
 				 <input name="button" class="btn btn-primary" onclick="change()" type="button" value="Punch In" id="start1"></input>
 				</center>
                         
-                      <%   
-
+                        <%   
                     }
-//                               
-               %>
+                        %>
 					
 	
 		
-				 <%@include file="footer.jsp" %>
+                <%@include file="footer.jsp" %>
             </div>
             <!-- /. PAGE INNER  -->
         </div>
