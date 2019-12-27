@@ -67,7 +67,6 @@ public class mail extends HttpServlet {
             
             SendMail.send1(to,subject, code,link, user, pass);
             String qinsert="insert into AMS.forgot_password(email,code,status) select '"+to+"','"+code+"','Active' where not exists (Select email From AMS.forgot_password where email='"+to+"') LIMIT 1";
-//                            String qinsert="insert into AMS.manage(email,date,workinghour) values('"+email1+"','"+formatter.format(calendar.getTime())+"','00:00:00') ";
                             int i =st.executeUpdate(qinsert);
                             if(i==0)
                             {

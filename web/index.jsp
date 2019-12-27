@@ -374,19 +374,40 @@
                          Class.forName("com.mysql.jdbc.Driver"); 
                             Connection cn=DriverManager.getConnection("jdbc:mysql://localhost:3306/AMS","root","mysql");
                             Statement st=cn.createStatement(); 
-                        String addworking="update AMS.manage SET workinghour='"+finalTime+"' where idmanage='"+session.getAttribute("id")+"'";
-                                 int i1 =st.executeUpdate(addworking);
-                         session.setAttribute("workinghour",finalTime);
+                            String checkPunchIn="select * from AMS.manage where date='"+ formatter.format(calendar.getTime())+"' AND idmanage='"+session.getAttribute("id")+"'";
+                            ResultSet rscheck=st.executeQuery(checkPunchIn);
+                            if(rscheck.next())
+                            {
+                               String punch_in1=rscheck.getString("punch_in");
+                               if(punch_in1==null)
+                                {
+                                     %>
+                         
+                                    <center>
+                                             <input name="button" class="btn btn-primary" onclick="change()" type="button" value="Punch In" id="start1"></input>
+                                            </center>
+
+                                  <%  
+                                }
+                                else
+                                {
+                                     String addworking="update AMS.manage SET workinghour='"+finalTime+"' where idmanage='"+session.getAttribute("id")+"'";
+                                     int i1 =st.executeUpdate(addworking);
+                                     session.setAttribute("workinghour",finalTime);
+                                      %>
+                         
+                                    <center>
+                                             <input name="button" class="btn btn-primary" onclick="change()" type="button" value="Punch Out" id="start1"></input>
+                                            </center>
+
+                                  <%  
+                                }
+                            }
+                       
                         } catch (Exception e) {
                          e.printStackTrace();
                          }   
-                         %>
-                         
-                        <center>
-				 <input name="button" class="btn btn-primary" onclick="change()" type="button" value="Punch Out" id="start1"></input>
-				</center>
                         
-                      <%  
                     }
                     else
                     {

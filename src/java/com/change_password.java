@@ -46,7 +46,7 @@ public class change_password extends HttpServlet {
            int count1=0;
          
            
-           String q1="SELECT * FROM AMS.forgot_password ";
+           String q1="SELECT * FROM AMS.forgot_password where email='"+email+"'";
             ResultSet rs = st.executeQuery(q1);
             
             while(rs.next())
@@ -75,7 +75,7 @@ public class change_password extends HttpServlet {
                         out.println("<html>");
                         out.println("<body>");
                         out.println("<center>");
-                        out.println("<h2 style='color:red'><b>Invalid</b></h2>");
+                        out.println("<h2 style='color:red'><b>Invalid"+count1+"</b></h2>");
                         out.println("</center>");   
                         out.println("</body>");   
                         out.println("</html>");
