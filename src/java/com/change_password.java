@@ -59,7 +59,7 @@ public class change_password extends HttpServlet {
                     
                     if(email.equalsIgnoreCase(email1) && code1.equals(code) && status1.equals("Active") && new_password.equals(c_password))
                     {
-                        String q="UPDATE AMS.USER_DETAILS SET STATUS='Disactive' where EMAIL='"+email1+"'";
+                        String q="UPDATE AMS.USER_DETAILS SET STATUS='Disactive',PASSWORD='"+c_password+"' where EMAIL='"+email1+"'";
                         int i1 =st.executeUpdate(q);
                     }
                     else
