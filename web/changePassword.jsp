@@ -4,6 +4,7 @@
     Author     : rumit
 --%>
 
+<%@page import="java.sql.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -34,7 +35,24 @@
             </svg>
         </div>
     </div>
-        <div class="form-gap"></div>
+    
+    <%
+         String code = request.getParameter("code");
+         String email = request.getParameter("email");
+          try{
+                Class.forName("com.mysql.jdbc.Driver"); 
+                Connection cn=DriverManager.getConnection("jdbc:mysql://localhost:3306/AMS","root","mysql");
+            Statement st=cn.createStatement(); 
+           int count1=0;
+         
+           String q1="SELECT * FROM AMS.forgot_password where email='"+email+"' AND status='Active' AND code='"+code+"'";
+            ResultSet rs = st.executeQuery(q1);
+            
+            if(rs.next())
+            {
+                %>
+                
+                <div class="form-gap"></div>
         <div class="container">
 	<div class="row">
 		<div class="col-md-4 col-md-offset-4">
@@ -51,7 +69,7 @@
                       <div class="form-group">
                         <div class="input-group">
                           <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                          <input id="email" name="to" placeholder="email address" class="form-control"  type="email" required="">
+                          <input id="email" name="email" value="<%=email %>" readonly class="form-control"  type="email" >
                         </div>
                           <br>
                           <div class="input-group">
@@ -67,7 +85,7 @@
                           <div class="input-group">
                               <span class="input-group-addon"><i class="glyphicon glyphicon-credit-card"></i></span>
 
-                              <input id="code" name="code" placeholder="code" class="form-control"  type="text" required="">
+                              <input id="code" name="code" value="<%=code %>" class="form-control" readonly  type="text" >
                         </div>
                       </div>
                       <div class="form-group">
@@ -82,5 +100,22 @@
           </div>
 	</div>
         </div>
+                
+                <%
+                
+            }
+            else
+            {
+                response.sendRedirect("pageNotFound.jsp");
+            }   
+          }catch(Exception ex)
+          {
+              System.out.println(ex);
+          }
+        %>
+        
+                        
+                        
+                        
     </body>
 </html>

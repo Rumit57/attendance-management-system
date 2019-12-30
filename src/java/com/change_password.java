@@ -39,10 +39,11 @@ public class change_password extends HttpServlet {
                 Class.forName("com.mysql.jdbc.Driver"); 
                 Connection cn=DriverManager.getConnection("jdbc:mysql://localhost:3306/AMS","root","mysql");
             Statement st=cn.createStatement(); 
-           String email = request.getParameter("to");
+            String code = request.getParameter("code");
+           String email = request.getParameter("email");
            String new_password = request.getParameter("new_password");
            String c_password = request.getParameter("confirm_password");
-           String code = request.getParameter("code");
+         
            int count1=0;
          
            

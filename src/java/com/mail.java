@@ -60,8 +60,9 @@ public class mail extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<body>");
-            String link="http://localhost:8084/AMS/changePassword.jsp";
             String code= getSaltString();
+            String link="http://localhost:8084/AMS/changePassword.jsp?code="+code+"&email="+to;
+            
             String user = "shah.rumit99@gmail.com";
             String pass = "Rumit@57";
             

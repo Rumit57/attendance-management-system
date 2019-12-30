@@ -83,7 +83,7 @@ String pass1=request.getParameter("pass");
 						</div>
 
 						<div>
-							<a href="#" class="txt1">
+							<a href="forgotPassword.jsp" class="txt1">
 								Forgot Password?
 							</a>
 						</div>
