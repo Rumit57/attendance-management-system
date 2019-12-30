@@ -48,18 +48,18 @@ public class change_password extends HttpServlet {
            int count1=0;
          
            
-           String q1="SELECT * FROM AMS.forgot_password where email='"+email+"' AND code='"+code+"'";
+           String q1="SELECT * FROM AMS.USER_DETAILS where EMAIL='"+email+"' AND CODE='"+code+"'";
             ResultSet rs = st.executeQuery(q1);
             
             if(rs.next())
                 {
-                    String email1=rs.getString("email");
-                    String code1=rs.getString("code");
-                    String status1=rs.getString("status");
+                    String email1=rs.getString("EMAIL");
+                    String code1=rs.getString("CODE");
+                    String status1=rs.getString("STATUS");
                     
                     if(email.equalsIgnoreCase(email1) && code1.equals(code) && status1.equals("Active") && new_password.equals(c_password))
                     {
-                        String q="UPDATE AMS.forgot_password SET status='Disactive' where email='"+email1+"'";
+                        String q="UPDATE AMS.USER_DETAILS SET STATUS='Disactive' where EMAIL='"+email1+"'";
                         int i1 =st.executeUpdate(q);
                     }
                     else

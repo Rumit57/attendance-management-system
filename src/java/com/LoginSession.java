@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;  
+import java.sql.*;
 import javax.servlet.*;  
 import javax.servlet.http.*;  
 /**
@@ -39,19 +40,42 @@ public class LoginSession extends HttpServlet {
             String email=request.getParameter("email");
             String pass=request.getParameter("pass");
             
-        if(email.equals("shah.rumit57@gmail.com") && pass.equals("admin"))
-        {
-            HttpSession session=request.getSession();  
-            session.setAttribute("user",email);  
-            RequestDispatcher dis=request.getRequestDispatcher("index.jsp");
-             dis.forward(request, response);
-        }
-        else
-        {
+             try{
+                Class.forName("com.mysql.jdbc.Driver"); 
+                 Connection cn=DriverManager.getConnection("jdbc:mysql://localhost:3306/AMS","root","mysql");
+            Statement st=cn.createStatement(); 
+          
+         
+           String q1="SELECT * FROM AMS.USER_DETAILS where EMAIL='"+email+"'";
+            ResultSet rs = st.executeQuery(q1);
+            if(rs.next())
+            {
+                if(email.equals(rs.getString("EMAIL")) && pass.equals(rs.getString("PASSWORD")))
+                {
+                    HttpSession session=request.getSession();  
+                    session.setAttribute("user",email);  
+                    RequestDispatcher dis=request.getRequestDispatcher("index.jsp");
+                     dis.forward(request, response);
+                }
+                else
+                {
+                        RequestDispatcher dis=request.getRequestDispatcher("loginInvalid.jsp");
+                        dis.include(request, response);
+                }
+            }
+            else
+            {
+                    RequestDispatcher dis=request.getRequestDispatcher("loginInvalid.jsp");
+                    dis.include(request, response);
+            }
             
-                RequestDispatcher dis=request.getRequestDispatcher("loginInvalid.jsp");
-                dis.include(request, response);
-        }
+            
+             }catch(Exception ex)
+             {
+                 System.out.println(ex);
+             }
+            
+        
         }
     }
 

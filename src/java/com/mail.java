@@ -71,11 +71,11 @@ public class mail extends HttpServlet {
             boolean bool=SendMail.send1(to,subject, code,link, user, pass);
             if(bool)
             {
-                String qinsert="insert into AMS.forgot_password(email,code,status) select '"+to+"','"+code+"','Active' where not exists (Select email From AMS.forgot_password where email='"+to+"') LIMIT 1";
+                String qinsert="insert into AMS.USER_DETAILS(email,code,status) select '"+to+"','"+code+"','Active' where not exists (Select email From AMS.USER_DETAILS where email='"+to+"') LIMIT 1";
                             int i =st.executeUpdate(qinsert);
                             if(i==0)
                             {
-                                String q="UPDATE AMS.forgot_password SET code='"+code+"',status='Active' where email='"+to+"'";
+                                String q="UPDATE AMS.USER_DETAILS SET CODE='"+code+"',STATUS='Active' where EMAIL='"+to+"'";
                                 int i1 =st.executeUpdate(q);
                             }
                             

@@ -45,7 +45,7 @@
             Statement st=cn.createStatement(); 
            int count1=0;
          
-           String q1="SELECT * FROM AMS.forgot_password where email='"+email+"' AND status='Active' AND code='"+code+"'";
+           String q1="SELECT * FROM AMS.USER_DETAILS where EMAIL='"+email+"' AND STATUS='Active' AND CODE='"+code+"'";
             ResultSet rs = st.executeQuery(q1);
             
             if(rs.next())
