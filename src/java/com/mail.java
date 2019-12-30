@@ -60,21 +60,38 @@ public class mail extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<body>");
+                  
+
             String code= getSaltString();
             String link="http://localhost:8084/AMS/changePassword.jsp?code="+code+"&email="+to;
             
             String user = "shah.rumit99@gmail.com";
-            String pass = "Rumit@57";
+            String pass = "8866291338";
             
-            SendMail.send1(to,subject, code,link, user, pass);
-            String qinsert="insert into AMS.forgot_password(email,code,status) select '"+to+"','"+code+"','Active' where not exists (Select email From AMS.forgot_password where email='"+to+"') LIMIT 1";
+            boolean bool=SendMail.send1(to,subject, code,link, user, pass);
+            if(bool)
+            {
+                String qinsert="insert into AMS.forgot_password(email,code,status) select '"+to+"','"+code+"','Active' where not exists (Select email From AMS.forgot_password where email='"+to+"') LIMIT 1";
                             int i =st.executeUpdate(qinsert);
                             if(i==0)
                             {
                                 String q="UPDATE AMS.forgot_password SET code='"+code+"',status='Active' where email='"+to+"'";
                                 int i1 =st.executeUpdate(q);
                             }
-            out.println("Mail send successfully");
+                            
+                            out.println("<script type=\"text/javascript\">");
+                            out.println("alert('Mail successfully sent');");
+                            out.println("location='index.jsp';");
+                            out.println("</script>");
+//                out.println("<meta http-equiv='refresh' content='1;URL=index.jsp'>");//redirects after 3 seconds
+//                out.println("<p style='color:red;'>User or password incorrect!</p>");
+            }
+            else
+            {
+                RequestDispatcher dis=request.getRequestDispatcher("pageNotFound.jsp");
+                dis.forward(request, response);
+            }
+            
 
             out.println("</body>");
             out.println("</html>");
@@ -82,8 +99,7 @@ public class mail extends HttpServlet {
                 System.out.println(ex);
             }
             
-            RequestDispatcher dis=request.getRequestDispatcher("index.jsp");
-            dis.forward(request, response);
+            
         }
     }
 

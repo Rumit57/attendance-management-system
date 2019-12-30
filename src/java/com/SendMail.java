@@ -16,13 +16,12 @@ import javax.mail.internet.*;
 
 public class SendMail
 { 
-    public static void send1(String to, String sub, 
+    public static boolean send1(String to, String sub, 
                          String code,String link, final String user,final String pass)
     { 
         
         String msg="Hi -"+to +"\n"
               +"We got a request to forgot password.\n"
-              +"code - "+code+"\n"
               +"Change password link - "+link+"\n"
               +"If you ignore this message, your password will not be changed.\n";
         //create an instance of Properties Class   
@@ -51,7 +50,7 @@ public class SendMail
   	 	         return new PasswordAuthentication(user,pass); 
             }
         });
-
+       
         try {
  
      	      /*  Create an instance of MimeMessage, 
@@ -67,9 +66,12 @@ public class SendMail
             /* Transport class is used to deliver the message to the recipients */
            
             Transport.send(message);
+            return true;
         }
         catch(Exception e) {
     	     e.printStackTrace();
+             return false;
         }
+        
     }  
 }

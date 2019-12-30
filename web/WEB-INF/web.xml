@@ -20,6 +20,10 @@
         <servlet-name>change_password</servlet-name>
         <servlet-class>com.change_password</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>passwordEncrypt</servlet-name>
+        <servlet-class>com.passwordEncrypt</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>index</servlet-name>
         <url-pattern>/index</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>change_password</servlet-name>
         <url-pattern>/change_password</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>passwordEncrypt</servlet-name>
+        <url-pattern>/passwordEncrypt</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

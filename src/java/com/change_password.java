@@ -8,6 +8,7 @@ package com;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
+import java.util.*;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -47,10 +48,10 @@ public class change_password extends HttpServlet {
            int count1=0;
          
            
-           String q1="SELECT * FROM AMS.forgot_password where email='"+email+"'";
+           String q1="SELECT * FROM AMS.forgot_password where email='"+email+"' AND code='"+code+"'";
             ResultSet rs = st.executeQuery(q1);
             
-            while(rs.next())
+            if(rs.next())
                 {
                     String email1=rs.getString("email");
                     String code1=rs.getString("code");
@@ -67,6 +68,10 @@ public class change_password extends HttpServlet {
                     }
                     if(count1==0)
                     {
+                        response.setHeader("Pragma","no-cache");
+                        response.setHeader("Cache-Control","no-store");
+                        response.setHeader("Expires","0");
+                        response.setDateHeader("Expires",-1);
                         RequestDispatcher dis=request.getRequestDispatcher("index.jsp");
                         dis.forward(request, response);
                     }
@@ -85,6 +90,11 @@ public class change_password extends HttpServlet {
                     }
                     
                 }
+            else
+            {
+                RequestDispatcher dis=request.getRequestDispatcher("pageNotFound.jsp");
+                dis.forward(request, response);
+            }
               
           
            
