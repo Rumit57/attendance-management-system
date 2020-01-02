@@ -73,11 +73,13 @@
         </div>
         <script>
         $('#submit').click(function(){
-        if($.trim($('#email').val()) == ''){
+        if($.trim($('#email').val()) === ''){
            alert('Input can not be left blank');
            return false;
         }
      });
+     
             </script>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     </body>
 </html>
