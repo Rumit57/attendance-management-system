@@ -33,6 +33,8 @@
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 <!--===============================================================================================-->
+
+  <link href="./css/sweetalert.css" rel="stylesheet">
 </head>
 
 
@@ -85,6 +87,10 @@
 							</a>
 						</div>
 					</div>
+                              
+     
+                                <button  class="btn btn-success btn sweet-prompt">Forgot Password</button>
+                     
 			
 
 					<div class="container-login100-form-btn">
@@ -138,6 +144,7 @@
 	<script src="vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
-
+        <script src="./js/sweetalert.min.js"></script>
+        <script src="./js/sweetalert.init.js"></script>
 </body>
 </html>

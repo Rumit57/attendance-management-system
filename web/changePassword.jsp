@@ -24,6 +24,12 @@
         </style>
     </head>
     <body>
+        <% 
+            response.setHeader("Pragma","no-cache");
+            response.setHeader("Cache-Control","no-store");
+            response.setHeader("Expires","0");
+            response.setDateHeader("Expires",-1);
+        %>
            <!--progress-->
     <link href="css/style_1.css" rel="stylesheet">
     <script src="js/common.min.js"></script>
@@ -51,11 +57,8 @@
             if(rs.next())
             {
               
-            response.setHeader("Pragma","no-cache");
-            response.setHeader("Cache-Control","no-store");
-            response.setHeader("Expires","0");
-            response.setDateHeader("Expires",-1);
-%>
+            
+            %>
                 
                 <div class="form-gap"></div>
         <div class="container">

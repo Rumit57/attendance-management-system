@@ -56,11 +56,11 @@
                       <div class="form-group">
                         <div class="input-group">
                           <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                          <input id="email" name="to" placeholder="email address" class="form-control"  type="email" required="">
+                          <input id="email" name="to" placeholder="email address" class="form-control"  type="email" >
                         </div>
                       </div>
                       <div class="form-group">
-                        <input name="recover-submit" class="btn btn-lg btn-primary btn-block" value="Forgot Password" type="submit">
+                        <input id="submit" name="recover-submit" class="btn btn-lg btn-primary btn-block" value="Forgot Password" type="submit">
                       </div>
                     </form>
              
@@ -71,6 +71,13 @@
           </div>
 	</div>
         </div>
-        
+        <script>
+        $('#submit').click(function(){
+        if($.trim($('#email').val()) == ''){
+           alert('Input can not be left blank');
+           return false;
+        }
+     });
+            </script>
     </body>
 </html>

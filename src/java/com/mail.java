@@ -80,7 +80,7 @@ public class mail extends HttpServlet {
                             }
                             
                             out.println("<script type=\"text/javascript\">");
-                            out.println("alert('Mail successfully sent');");
+                            out.println("sweetAlert('Mail successfully sent');");
                             out.println("location='index.jsp';");
                             out.println("</script>");
 //                out.println("<meta http-equiv='refresh' content='1;URL=index.jsp'>");//redirects after 3 seconds
