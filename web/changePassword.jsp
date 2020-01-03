@@ -44,14 +44,14 @@
     
     <%
          String code = request.getParameter("code");
-         String email = request.getParameter("email");
+         //String email = request.getParameter("email");
           try{
                 Class.forName("com.mysql.jdbc.Driver"); 
                 Connection cn=DriverManager.getConnection("jdbc:mysql://localhost:3306/AMS","root","mysql");
             Statement st=cn.createStatement(); 
            int count1=0;
          
-           String q1="SELECT * FROM AMS.USER_DETAILS where EMAIL='"+email+"' AND STATUS='Active' AND CODE='"+code+"'";
+           String q1="SELECT * FROM AMS.USER_DETAILS where STATUS='Active' AND CODE='"+code+"'";
             ResultSet rs = st.executeQuery(q1);
             
             if(rs.next())
@@ -77,17 +77,19 @@
                       <div class="form-group">
                         <div class="input-group">
                           <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                          <input id="email" name="email" value="<%=email %>" readonly class="form-control"  type="email" >
+                          <input id="email" name="email" value="<%=rs.getString("email") %>" readonly class="form-control"  type="email" >
                         </div>
                           <br>
                           <div class="input-group">
                           <span class="input-group-addon"><i class="fa fa-lock "></i></span>
                           <input id="new_password" name="new_password" placeholder="New password" class="form-control"  type="password" required="">
+                          <span class="input-group-addon"><i id="pass-status" class="fa fa-eye" aria-hidden="true" onClick="viewPassword()"></i></span>
                         </div>
                            <br>
                           <div class="input-group">
                           <span class="input-group-addon"><i class="fa fa-lock "></i></span>
                           <input id="confirm_password" name="confirm_password" placeholder="confirm password" class="form-control"  type="password" required="">
+                          <span class="input-group-addon"><i id="pass-status2" class="fa fa-eye" aria-hidden="true" onClick="viewPassword2()"></i></span>
                         </div>
                              <br>
                           <div class="input-group">
@@ -108,6 +110,41 @@
           </div>
 	</div>
         </div>
+                        <script>
+                            function viewPassword()
+                        {
+                          var passwordInput = document.getElementById('new_password');
+                          var passwordInput2 = document.getElementById('confirm_password');
+                          var passStatus = document.getElementById('pass-status');
+                          var passStatus = document.getElementById('pass-status');
+
+                          if (passwordInput.type == 'password'){
+                            passwordInput.type='text';
+                            passStatus.className='fa fa-eye-slash';
+
+                          }
+                          else{
+                            passwordInput.type='password';
+                            passStatus.className='fa fa-eye';
+                          }
+                        }
+                        function viewPassword2()
+                        {
+                          var passwordInput2 = document.getElementById('confirm_password');
+                          var passStatus2 = document.getElementById('pass-status2');
+
+                          if (passwordInput2.type == 'password'){
+                            passwordInput2.type='text';
+                            passStatus2.className='fa fa-eye-slash';
+
+                          }
+                          else{
+                            passwordInput2.type='password';
+                            passStatus2.className='fa fa-eye';
+                          }
+                        }
+
+                            </script>
                 
                 <%
                 

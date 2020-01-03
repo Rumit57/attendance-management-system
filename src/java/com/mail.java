@@ -63,7 +63,7 @@ public class mail extends HttpServlet {
                   
 
             String code= getSaltString();
-            String link="http://localhost:8084/AMS/changePassword.jsp?code="+code+"&email="+to;
+            String link="http://localhost:8084/AMS/changePassword.jsp?code="+code;
             
             String user = "shah.rumit99@gmail.com";
             String pass = "8866291338";
@@ -78,9 +78,10 @@ public class mail extends HttpServlet {
                                 String q="UPDATE AMS.USER_DETAILS SET CODE='"+code+"',STATUS='Active' where EMAIL='"+to+"'";
                                 int i1 =st.executeUpdate(q);
                             }
-                            
+//                            RequestDispatcher dis=request.getRequestDispatcher("index.jsp");
+//                        dis.forward(request, response);
                             out.println("<script type=\"text/javascript\">");
-                            out.println("sweetAlert('Mail successfully sent');");
+                            out.println("alert('Mail successfully sent');");
                             out.println("location='index.jsp';");
                             out.println("</script>");
 //                out.println("<meta http-equiv='refresh' content='1;URL=index.jsp'>");//redirects after 3 seconds

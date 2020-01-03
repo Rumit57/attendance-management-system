@@ -57,7 +57,7 @@ public class change_password extends HttpServlet {
                     String code1=rs.getString("CODE");
                     String status1=rs.getString("STATUS");
                     
-                    if(email.equalsIgnoreCase(email1) && code1.equals(code) && status1.equals("Active") && new_password.equals(c_password))
+                    if(email.equalsIgnoreCase(email1) && code1.equals(code) && status1.equals("Active") && new_password.equals(c_password) && !new_password.equals("") && !c_password.equals(""))
                     {
                         String q="UPDATE AMS.USER_DETAILS SET STATUS='Deactive',PASSWORD='"+c_password+"' where EMAIL='"+email1+"'";
                         int i1 =st.executeUpdate(q);
@@ -68,12 +68,11 @@ public class change_password extends HttpServlet {
                     }
                     if(count1==0)
                     {
-                        response.setHeader("Pragma","no-cache");
-                        response.setHeader("Cache-Control","no-store");
-                        response.setHeader("Expires","0");
-                        response.setDateHeader("Expires",-1);
-                        RequestDispatcher dis=request.getRequestDispatcher("index.jsp");
-                        dis.forward(request, response);
+                        out.println("<script type=\"text/javascript\">");
+                        out.println("alert('Password change successfully');");
+                        out.println("location='index.jsp';");
+                        out.println("</script>");
+                        
                     }
                     
                     else
