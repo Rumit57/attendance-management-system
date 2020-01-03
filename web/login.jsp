@@ -89,7 +89,7 @@
 					</div>
                               
      
-                                <button  class="btn btn-success btn sweet-prompt">Forgot Password</button>
+                                <!--<button  class="btn btn-success btn sweet-prompt">Forgot Password</button>-->
                      
 			
 

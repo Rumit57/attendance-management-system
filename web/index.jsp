@@ -70,7 +70,7 @@
                             String qSelect="select * from AMS.manage where date='"+rs.getString("date")+"' and email='"+email1+"'";
                             ResultSet rsSelect = st.executeQuery(qSelect);
                             
-                            while(rsSelect.next())
+                            if(rsSelect.next())
                             {
 //                                session.setAttribute("id","35");
 //                                session.setAttribute("workinghour","00:00:01");
@@ -91,7 +91,22 @@
                                    
 
                                 }
-                            } 
+                            }
+                            else
+                            {
+                                String qinsert="insert into AMS.manage(email,date,workinghour) values('"+email1+"','"+formatter.format(calendar.getTime())+"','00:00:00') ";
+                                int i =st.executeUpdate(qinsert);
+                                if(i>0)
+                                {
+                                    String q3="SELECT * FROM AMS.manage ORDER BY idmanage DESC LIMIT 1";
+                                    ResultSet rs1 = st.executeQuery(q3);
+                                    if(rs1.next())
+                                    {
+                                       session.setAttribute("id",rs1.getInt("idmanage"));
+                                       session.setAttribute("workinghour",rs1.getString("workinghour"));
+                                    }
+                                }
+                            }
                         }
                 }
             
@@ -340,7 +355,7 @@
 		<div id="page-wrapper">
 		  <div class="header"> 
                         <h1 class="page-header">
-                            Dashboard <small>Welcome Rumit Shah <%=session.getAttribute("id") %> <%=count1 %> <%=count2%> </small>
+                            Dashboard <small>Welcome <%=email1%> <%=session.getAttribute("id") %> <%=count1 %> <%=count2%> </small>
                         </h1>
 						<ol class="breadcrumb">
 					  <li><a href="#">Home</a></li>
