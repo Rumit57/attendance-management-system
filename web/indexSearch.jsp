@@ -22,16 +22,44 @@
     <body>
         <%
 String name=request.getParameter("val");
-
+try{
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/AMS","root","mysql");
 if(name==null||name.trim().equals(""))
 {
-    out.print("<p>Please select date!</p>");
+    PreparedStatement ps=con.prepareStatement("select * from AMS.manage" );
+    ResultSet rs=ps.executeQuery();
+
+    if(!rs.isBeforeFirst()) 
+    {    
+        out.println("<p>No Record Found!</p>"); 
+    }
+    else
+    {
+    %>
+        <table class="table table-striped"  width="100%"> 
+            <thead class="thead-dark">
+                <tr><th>Id</th><th>Email</th><th>Date</th><th>Punch In</th><th>Punch Out</th><th>working time</th></tr>
+            </thead>
+            <tbody>
+
+                <%
+        while(rs.next())
+        {
+            out.print("<tr><td>"+rs.getString(1)+"</td><td>"+rs.getString(2)+"</td><td>"+rs.getString(3)+"</td><td>"+rs.getString(4)+"</td><td>"+rs.getString(5)+"</td><td>"+rs.getString(6)+"</td></tr>");
+        }
+                %>
+            </tbody>
+
+
+       </table>
+
+            <%
+    }
 }
 else
 {
-    try{
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/AMS","root","mysql");
+    
         PreparedStatement ps=con.prepareStatement("select * from AMS.manage where idmanage like '"+name+"%' or email like '%"+name+"%' or date like '%"+name+"%'" );
         ResultSet rs=ps.executeQuery();
 
@@ -40,7 +68,8 @@ else
             out.println("<p>No Record Found!</p>"); 
         }
         else
-        {%>
+        {
+        %>
             <table class="table table-striped"  width="100%"> 
                 <thead class="thead-dark">
                     <tr><th>Id</th><th>Email</th><th>Date</th><th>Punch In</th><th>Punch Out</th><th>working time</th></tr>
@@ -61,11 +90,11 @@ else
                 <%
         }
        
-    }catch(Exception e)
+    }
+}catch(Exception e)
     {
         out.print(e);
     }
-}
 %>
         
     </body>

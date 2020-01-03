@@ -55,7 +55,7 @@ function searchInfo(){
 
 
 </head>
-<body>
+<body onload="searchInfo()">
     
     <div id="wrapper">
          <%@include file="header1.jsp" %>
@@ -136,11 +136,13 @@ function searchInfo(){
 				 
 			<h3>Search Employee</h3>
                         <br>
-                        <form name="vinform">
-                        <input type="date" name="name" id="name" onfocusin="searchInfo()"/>
-                        <!--<input type="text" name="name" id="name" onkeyup="searchInfo()"/>-->
+                        <form name="vinform" class="form-inline">
+                            
+                         <div class="form-group">
+                            <input class="form-control" type="date" name="name" id="name" onfocusin="searchInfo()"/>
+                        </div>
                         </form>
-
+                       
                         <span id="mylocation"></span>	
 
                         
