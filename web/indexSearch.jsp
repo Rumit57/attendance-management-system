@@ -4,7 +4,7 @@ String name=request.getParameter("val");
 
 if(name==null||name.trim().equals(""))
 {
-    out.print("<p>Please enter name!</p>");
+    out.print("<p>Please select date!</p>");
 }
 else
 {

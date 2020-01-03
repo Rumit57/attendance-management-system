@@ -193,7 +193,7 @@
                     </li> 		 
 		
                     <li>
-                        <a href="#"><i class="fa fa-table"></i>Live Activity Tables</a>
+                        <a href="liveTable.jsp"><i class="fa fa-table"></i>Live Activity Tables</a>
                     </li>
                   
                        
