@@ -25,7 +25,7 @@
     <link href="assets/css/custom-styles.css" rel="stylesheet" />
      <!-- Google Fonts-->
    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
-   
+  
    <script>
 var request=new XMLHttpRequest();
 function searchInfo(){
@@ -50,8 +50,13 @@ function searchInfo(){
     }
 }
 </script>
+
+
+
+
 </head>
 <body>
+    
     <div id="wrapper">
          <%@include file="header1.jsp" %>
         <!--/. NAV TOP  -->
@@ -130,6 +135,7 @@ function searchInfo(){
             <div id="page-inner"> 
 				 
 			<h3>Search Employee</h3>
+                        <br>
                         <form name="vinform">
                         <input type="date" name="name" id="name" onfocusin="searchInfo()"/>
                         <!--<input type="text" name="name" id="name" onkeyup="searchInfo()"/>-->
@@ -137,6 +143,8 @@ function searchInfo(){
 
                         <span id="mylocation"></span>	
 
+                        
+       
                 <!-- /. ROW  -->
 				 <%@include file="footer.jsp" %>
 				</div>
@@ -154,6 +162,10 @@ function searchInfo(){
     <script src="assets/js/jquery.metisMenu.js"></script>
       <!-- Custom Js -->
     <script src="assets/js/custom-scripts.js"></script>
+    
  
+ 
+
+
 </body>
 </html>

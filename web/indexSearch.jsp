@@ -1,5 +1,26 @@
 <%@ page import="java.sql.*" %>
-<%
+
+<html>
+    <head>
+       <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta content="" name="description" />
+    <meta content="webthemez" name="author" />
+    <title>Primavera systems</title>
+    <!-- Bootstrap Styles-->
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <!-- FontAwesome Styles-->
+    <link href="assets/css/font-awesome.css" rel="stylesheet" />
+    <!-- Morris Chart Styles-->
+    <link href="assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
+    <!-- Custom Styles-->
+    <link href="assets/css/custom-styles.css" rel="stylesheet" />
+    
+    <!-- Google Fonts-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    </head>
+    <body>
+        <%
 String name=request.getParameter("val");
 
 if(name==null||name.trim().equals(""))
@@ -19,14 +40,25 @@ else
             out.println("<p>No Record Found!</p>"); 
         }
         else
-        {
-            out.print("<table border='1' cellpadding='2' width='100%'>");
-            out.print("<tr><th>Id</th><th>Email</th><th>Date</th><th>Punch In</th><th>Punch Out</th><th>working time</th></tr>");
+        {%>
+            <table class="table table-striped"  width="100%"> 
+                <thead class="thead-dark">
+                    <tr><th>Id</th><th>Email</th><th>Date</th><th>Punch In</th><th>Punch Out</th><th>working time</th></tr>
+                </thead>
+                <tbody>
+                    
+                    <%
             while(rs.next())
             {
                 out.print("<tr><td>"+rs.getString(1)+"</td><td>"+rs.getString(2)+"</td><td>"+rs.getString(3)+"</td><td>"+rs.getString(4)+"</td><td>"+rs.getString(5)+"</td><td>"+rs.getString(6)+"</td></tr>");
             }
-            out.print("</table>");
+                    %>
+                </tbody>
+            
+            
+           </table>
+                
+                <%
         }
        
     }catch(Exception e)
@@ -35,3 +67,6 @@ else
     }
 }
 %>
+        
+    </body>
+</html>
