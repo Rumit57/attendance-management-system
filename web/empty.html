@@ -5,192 +5,112 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta content="" name="description" />
     <meta content="webthemez" name="author" />
+    <link href="https://cdn.datatables.net/v/dt/dt-1.10.16/sl-1.2.5/datatables.min.css" rel="stylesheet" />
+    <link href="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.10/css/dataTables.checkboxes.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/sl-1.2.5/datatables.min.js"></script>
+    <script type="text/javascript" src="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.10/js/dataTables.checkboxes.min.js"></script>
    
-    <style>
-        table.dataTable.select tbody tr,
-        table.dataTable thead th:first-child {
-          cursor: pointer;
-        }
-    </style>
-    
+   
   
 </head>
 <body>
-  <h3><a href="http://www.gyrocode.com/articles/jquery-datatables-checkboxes/">jQuery DataTables – Row selection using checkboxes</a></h3>
-<a href="http://www.gyrocode.com/articles/jquery-datatables-checkboxes/">See full article on Gyrocode.com</a>
-<hr><br>
-   
-    <form id="frm-example" action="/path/to/your/script" method="POST">
+
     
-<table id="example" class="display select" cellspacing="0" width="100%">
+<form id="frm-example" action="#" method="POST">
+
+<table id="example" class="display" cellspacing="0" width="100%">
    <thead>
       <tr>
-         <th><input name="select_all" value="1" type="checkbox"></th>
+         <th></th>
          <th>Name</th>
          <th>Position</th>
          <th>Office</th>
-         <th>Extn.</th>
+         <th>Extn</th>
          <th>Start date</th>
          <th>Salary</th>
       </tr>
    </thead>
-   <tr>
-       
-       <td><input name="select_all" value="1" type="checkbox"></td>
+   <tbody>
+     <tr>
+         <td></td>
          <td>Name</td>
          <td>Position</td>
          <td>Office</td>
-         <td>Extn.</td>
+         <td>Extn</td>
          <td>Start date</td>
          <td>Salary</td>
-   </tr>
+      </tr>
+      <tr>
+         <td></td>
+         <td>Name</td>
+         <td>Position</td>
+         <td>Office</td>
+         <td>Extn</td>
+         <td>Start date</td>
+         <td>Salary</td>
+      </tr>
+      <tr>
+         <td></td>
+         <td>Name</td>
+         <td>Position</td>
+         <td>Office</td>
+         <td>Extn</td>
+         <td>Start date</td>
+         <td>Salary</td>
+      </tr>
+      
+     
+   </tbody>
    <tfoot>
       <tr>
          <th></th>
          <th>Name</th>
          <th>Position</th>
          <th>Office</th>
-         <th>Extn.</th>
+         <th>Age</th>
          <th>Start date</th>
          <th>Salary</th>
       </tr>
    </tfoot>
 </table>
+
 <hr>
 
 <p>Press <b>Submit</b> and check console for URL-encoded form data that would be submitted.</p>
 
 <p><button>Submit</button></p>
 
-<b>Data submitted to the server:</b><br>
-<pre id="example-console">
-</pre>
+<p><b>Selected rows data:</b></p>
+<pre id="example-console-rows"></pre>
+
+<p><b>Form data as submitted to the server:</b></p>
+<pre id="example-console-form"></pre>
+
 </form>
     
-    
-  <script type="text/javascript">
-        
-     //
-// Updates "Select all" control in a data table
-//
-function updateDataTableSelectAllCtrl(table){
-   var $table             = table.table().node();
-   var $chkbox_all        = $('tbody input[type="checkbox"]', $table);
-   var $chkbox_checked    = $('tbody input[type="checkbox"]:checked', $table);
-   var chkbox_select_all  = $('thead input[name="select_all"]', $table).get(0);
-
-   // If none of the checkboxes are checked
-   if($chkbox_checked.length === 0){
-      chkbox_select_all.checked = false;
-      if('indeterminate' in chkbox_select_all){
-         chkbox_select_all.indeterminate = false;
-      }
-
-   // If all of the checkboxes are checked
-   } else if ($chkbox_checked.length === $chkbox_all.length){
-      chkbox_select_all.checked = true;
-      if('indeterminate' in chkbox_select_all){
-         chkbox_select_all.indeterminate = false;
-      }
-
-   // If some of the checkboxes are checked
-   } else {
-      chkbox_select_all.checked = true;
-      if('indeterminate' in chkbox_select_all){
-         chkbox_select_all.indeterminate = true;
-      }
-   }
-}
-
-$(document).ready(function (){
-   // Array holding selected row IDs
-   var rows_selected = [];
-   var table = $('#example').DataTable({
-      'ajax': 'https://api.myjson.com/bins/1us28',
-      'columnDefs': [{
-         'targets': 0,
-         'searchable':false,
-         'orderable':false,
-         'width':'1%',
-         'className': 'dt-body-center',
-         'render': function (data, type, full, meta){
-             return '<input type="checkbox">';
+  <script>
+             $(document).ready(function() {
+   var table = $('#example').DataTable({     
+      'columnDefs': [
+         {
+            'targets': 0,
+            'checkboxes': {
+               'selectRow': true
+            }
          }
-      }],
-      'order': [1, 'asc'],
-      'rowCallback': function(row, data, dataIndex){
-         // Get row ID
-         var rowId = data[0];
-
-         // If row ID is in the list of selected row IDs
-         if($.inArray(rowId, rows_selected) !== -1){
-            $(row).find('input[type="checkbox"]').prop('checked', true);
-            $(row).addClass('selected');
-         }
-      }
+      ],
+      'select': {
+         'style': 'multi'
+      },
+      'order': [[1, 'asc']]
    });
-
-   // Handle click on checkbox
-   $('#example tbody').on('click', 'input[type="checkbox"]', function(e){
-      var $row = $(this).closest('tr');
-
-      // Get row data
-      var data = table.row($row).data();
-
-      // Get row ID
-      var rowId = data[0];
-
-      // Determine whether row ID is in the list of selected row IDs 
-      var index = $.inArray(rowId, rows_selected);
-
-      // If checkbox is checked and row ID is not in list of selected row IDs
-      if(this.checked && index === -1){
-         rows_selected.push(rowId);
-
-      // Otherwise, if checkbox is not checked and row ID is in list of selected row IDs
-      } else if (!this.checked && index !== -1){
-         rows_selected.splice(index, 1);
-      }
-
-      if(this.checked){
-         $row.addClass('selected');
-      } else {
-         $row.removeClass('selected');
-      }
-
-      // Update state of "Select all" control
-      updateDataTableSelectAllCtrl(table);
-
-      // Prevent click event from propagating to parent
-      e.stopPropagation();
-   });
-
-   // Handle click on table cells with checkboxes
-   $('#example').on('click', 'tbody td, thead th:first-child', function(e){
-      $(this).parent().find('input[type="checkbox"]').trigger('click');
-   });
-
-   // Handle click on "Select all" control
-   $('thead input[name="select_all"]', table.table().container()).on('click', function(e){
-      if(this.checked){
-         $('#example tbody input[type="checkbox"]:not(:checked)').trigger('click');
-      } else {
-         $('#example tbody input[type="checkbox"]:checked').trigger('click');
-      }
-
-      // Prevent click event from propagating to parent
-      e.stopPropagation();
-   });
-
-   // Handle table draw event
-   table.on('draw', function(){
-      // Update state of "Select all" control
-      updateDataTableSelectAllCtrl(table);
-   });
-    
+   
    // Handle form submission event 
    $('#frm-example').on('submit', function(e){
       var form = this;
+      
+      var rows_selected = table.column(0).checkboxes.selected();
 
       // Iterate over all selected checkboxes
       $.each(rows_selected, function(index, rowId){
@@ -203,24 +123,24 @@ $(document).ready(function (){
          );
       });
 
-      // FOR DEMONSTRATION ONLY     
+      // FOR DEMONSTRATION ONLY
+      // The code below is not needed in production
       
       // Output form data to a console     
-      $('#example-console').text($(form).serialize());
-      console.log("Form submission", $(form).serialize());
+      $('#example-console-rows').text(rows_selected.join(","));
+      
+      // Output form data to a console     
+      $('#example-console-form').text($(form).serialize());
        
       // Remove added elements
       $('input[name="id\[\]"]', form).remove();
        
       // Prevent actual form submission
       e.preventDefault();
-   });
+   });   
 });
     </script>
-    
-    
-   
-   
-   
+
+ 
 </body>
 </html>

@@ -1,35 +1,49 @@
+          $(document).ready(function() {
+   var table = $('#example').DataTable({     
+      'columnDefs': [
+         {
+            'targets': 0,
+            'checkboxes': {
+               'selectRow': true
+            }
+         }
+      ],
+      'select': {
+         'style': 'multi'
+      },
+      'order': [[1, 'asc']]
+   });
+   
+   // Handle form submission event 
+   $('#frm-example').on('submit', function(e){
+      var form = this;
+      
+      var rows_selected = table.column(0).checkboxes.selected();
 
-     
-    var h3 = document.getElementsByTagName ('h3')[0],
-    seconds = 0, minutes = 0, hours = 0, t;
+      // Iterate over all selected checkboxes
+      $.each(rows_selected, function(index, rowId){
+         // Create a hidden element 
+         $(form).append(
+             $('<input>')
+                .attr('type', 'hidden')
+                .attr('name', 'id[]')
+                .val(rowId)
+         );
+      });
 
-function
-timer ()
-{
-  t = setTimeout (add, 1000);
-}
-
-timer();
-
-function
-add ()
-{
-  seconds++;
-  if (seconds >= 60)
-    {
-      seconds = 0;
-      minutes++;
-      if (minutes >= 60)
-	{
-	  minutes = 0;
-	  hours++;
-	}
-    }
-
-  h3.textContent =
-          (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" +
-    (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" +
-    (seconds > 9 ? seconds : "0" + seconds) ;
-
-  timer ();
-}
+      // FOR DEMONSTRATION ONLY
+      // The code below is not needed in production
+      
+      // Output form data to a console     
+      $('#example-console-rows').text(rows_selected.join(","));
+      
+      // Output form data to a console     
+      $('#example-console-form').text($(form).serialize());
+       
+      // Remove added elements
+      $('input[name="id\[\]"]', form).remove();
+       
+      // Prevent actual form submission
+      e.preventDefault();
+   });   
+});
