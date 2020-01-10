@@ -31,6 +31,29 @@ var request=new XMLHttpRequest();
 function searchInfo(){
     var name=document.vinform.name.value;
     var url="indexSearch.jsp?val="+name;
+    
+
+    try
+    {
+        request.onreadystatechange=function()
+        {
+            if(request.readyState==4)
+            {
+                var val=request.responseText;
+                document.getElementById('mylocation').innerHTML=val;
+            }
+        }
+        request.open("GET",url,true);
+        request.send();
+    }catch(e)
+    {
+        alert("Unable to connect to server");
+    }
+}
+
+function searchInfo1(){
+    var name=document.vinform.name.value;
+    var url="ExportData?val="+name;
 
     try
     {
@@ -136,12 +159,15 @@ function searchInfo(){
 				 
 			<h3>Search Employee</h3>
                         <br>
-                        <form name="vinform" class="form-inline">
+                            <form name="vinform" class="form-inline"  >
                             
-                         <div class="form-group">
+                         <div class="form-group" >
                             <input class="form-control" type="date" name="name" id="name" onfocusin="searchInfo()"/>
+                            &emsp;&emsp;&emsp;&emsp;&emsp;
+                            <input class="login100-form-btn" type="button" name="button" value="Export" onclick="searchInfo1()">
                         </div>
                         </form>
+                           
                        
                         <span id="mylocation"></span>	
 

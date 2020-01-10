@@ -4,12 +4,10 @@
  * and open the template in the editor.
  */
 package com;
-
 import java.security.SecureRandom;
 import java.util.*;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-
 /**
  *
  * @author rumit

@@ -24,6 +24,10 @@
         <servlet-name>passwordEncrypt</servlet-name>
         <servlet-class>com.passwordEncrypt</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ExportData</servlet-name>
+        <servlet-class>com.ExportData</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>index</servlet-name>
         <url-pattern>/index</url-pattern>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>passwordEncrypt</servlet-name>
         <url-pattern>/passwordEncrypt</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExportData</servlet-name>
+        <url-pattern>/ExportData</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
