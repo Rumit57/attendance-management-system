@@ -163,8 +163,12 @@ function searchInfo1(){
                             
                          <div class="form-group" >
                             <input class="form-control" type="date" name="name" id="name" onfocusin="searchInfo()"/>
-                            &emsp;&emsp;&emsp;&emsp;&emsp;
-                            <input class="login100-form-btn" type="button" name="button" value="Export" onclick="searchInfo1()">
+                            &emsp;&emsp;&emsp;
+                            
+                            &emsp;&emsp;&emsp;
+                            <input class="login100-form-btn" type="button" name="Import" value="Import">
+                            &emsp;&emsp;
+                            <input class="login100-form-btn" type="button" name="Export" value="Export" onclick="searchInfo1()">
                         </div>
                         </form>
                            
