@@ -52,7 +52,7 @@
         </div>
     </div>
 	<div class="limiter">
-		<div class="container-login100">
+		
 			<div class="wrap-login100">
                             <form action="LoginSession" method="post" class="login100-form validate-form">
 					<span class="login100-form-title p-b-43">
@@ -121,7 +121,7 @@
 				<div class="login100-more" style="background-image: url('images/loginImage.jpg');">
 				</div>
 			</div>
-		</div>
+		
 	</div>
 	
 	
